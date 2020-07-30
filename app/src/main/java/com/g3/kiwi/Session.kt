@@ -1,11 +1,11 @@
 package com.g3.kiwi
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.g3.kiwi.routing.KiwiCoordinator
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class Session : Application() {
+class Session : MultiDexApplication() {
 
     companion object {
         lateinit var application: Session

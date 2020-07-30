@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Kiwi</string>
+
+    <!--  Errors  -->
+    <string name="error__loading_flights">Unable to load flights.</string>
+
+    <!--  Flights  -->
+    <string name="flights__destination">Destination</string>
+    <string name="flights__price">Price</string>
+
 </resources>

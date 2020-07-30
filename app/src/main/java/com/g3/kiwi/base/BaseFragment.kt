@@ -76,6 +76,12 @@ abstract class BaseFragment<BINDING: ViewBinding, HANDLER: BaseFragmentHandler> 
         Snackbar.make(rootView, text, if (longDuration) Snackbar.LENGTH_LONG else Snackbar.LENGTH_SHORT).show()
     }
 
+    protected fun showSnackBar(rootView: View, text: String?, longDuration: Boolean = false) {
+        text?.let {
+            Snackbar.make(rootView, text, if (longDuration) Snackbar.LENGTH_LONG else Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
     protected abstract fun setBinding(layoutInflater: LayoutInflater): BINDING
     protected abstract fun onFragmentLoadingFinished(binding: BINDING, context: Context)
 

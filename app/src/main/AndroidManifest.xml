@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.g3.kiwi">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".Session"
         android:allowBackup="true"
@@ -19,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".screens.SplashActivity" />
+        <activity android:name=".screens.splash.SplashActivity" />
 
     </application>
 

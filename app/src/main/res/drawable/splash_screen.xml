@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+    <item android:drawable="@color/white_FFFFFF"/>
+    <item
+        android:gravity="fill_horizontal|center"
+        android:height="200dp">
+        <inset
+            android:insetLeft="36dp"
+            android:insetRight="36dp"
+            android:drawable="@drawable/kiwi_logo"
+            />
+    </item>
+</layer-list>

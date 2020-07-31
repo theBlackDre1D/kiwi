@@ -2,11 +2,12 @@ package com.g3.kiwi.screens.splash
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.g3.kiwi.R
+import com.g3.kiwi.Session
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+
+        Session.application.coordinator.openHomeActivity(this)
     }
 }

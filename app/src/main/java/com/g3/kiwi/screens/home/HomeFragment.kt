@@ -30,10 +30,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeFragmentHandler>() {
             val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val todayDate = dateFormatter.format(Date(calendar.timeInMillis))
 
-            calendar.add(Calendar.DATE, 1)
-            val tomorrowDate = dateFormatter.format(Date(calendar.timeInMillis))
-
-            homeFragmentViewModel.getFlights(todayDate, tomorrowDate)
+            homeFragmentViewModel.getFlights(todayDate, todayDate)
         }
     }
 

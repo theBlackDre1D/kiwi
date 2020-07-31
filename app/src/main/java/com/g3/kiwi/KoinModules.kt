@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.g3.kiwi.api.FlightRequests
 import com.g3.kiwi.repositories.FlightRepositoryImp
 import com.g3.kiwi.repositories.interfaces.FlightRepository
-import com.g3.kiwi.screens.home.HomeFragmentViewModel
+import com.g3.kiwi.screens.home.fragments.HomeFragmentViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,11 +16,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 val koinModules = module {
 
     // ViewModels
-    viewModel { (handle: SavedStateHandle) -> HomeFragmentViewModel(handle, get() ) }
+    viewModel { (handle: SavedStateHandle) -> HomeFragmentViewModel(handle, get()) }
 
     // Repositories
     single<FlightRepository> { FlightRepositoryImp( get() ) }
 
+    // Retrofit
     single {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY;

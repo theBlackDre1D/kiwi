@@ -1,15 +1,14 @@
-package com.g3.kiwi.screens.home
+package com.g3.kiwi.screens.home.fragments
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.g3.kiwi.base.Either
+import com.g3.kiwi.extensions.coroutineTask
 import com.g3.kiwi.extensions.flowTask
 import com.g3.kiwi.models.FlightResponse
 import com.g3.kiwi.repositories.interfaces.FlightRepository
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 private const val FLIGHTS__BUNDLE_KEY = "FLIGHTS__BUNDLE_KEY"
 
@@ -26,7 +25,7 @@ class HomeFragmentViewModel(
             flightRepository.getFlights("PRG", "STN", dateFrom, dateTo)
         }
 
-        viewModelScope.launch {
+        coroutineTask {
             flow.collect { flightResponse ->
                 flights.postValue(flightResponse)
             }

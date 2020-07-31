@@ -5,6 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 private const val PARTNER = "picky"
+private const val V_VALUE = 3
 
 interface FlightRequests {
 
@@ -15,5 +16,5 @@ interface FlightRequests {
         @Query("date_from") dateFrom: String,
         @Query("date_to") dateTo: String,
         @Query("partner") partner: String = PARTNER,
-        @Query("v") v: Int = 3): FlightResponse
+        @Query("v") v: Int = V_VALUE): FlightResponse
 }

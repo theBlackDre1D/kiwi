@@ -1,4 +1,4 @@
-package com.g3.kiwi.screens.home
+package com.g3.kiwi.screens.home.fragments
 
 import android.content.Context
 import android.os.Bundle

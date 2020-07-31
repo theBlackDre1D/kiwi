@@ -1,4 +1,4 @@
-package com.g3.kiwi.screens.home
+package com.g3.kiwi.screens.home.fragments
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -14,6 +14,8 @@ import com.g3.kiwi.models.FlightResponse
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+
+private const val FLIGHTS_COUNT = 5
 
 class HomeFragment : BaseFragment<HomeFragmentBinding, HomeFragmentHandler>() {
 
@@ -47,7 +49,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeFragmentHandler>() {
 
     private fun setupViewPager(response: FlightResponse) {
         val fragments = mutableListOf<FlightPagerFragment>()
-        val flights = response.flights.subList(0, 5)
+        val flights = response.flights.subList(0, FLIGHTS_COUNT)
         flights.forEach { flight ->
             fragments.add(FlightPagerFragment.newInstance(flight))
         }
@@ -55,7 +57,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeFragmentHandler>() {
         val adapter: FragmentStatePagerAdapter by lazy {
             object : FragmentStatePagerAdapter(childFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
                 override fun getItem(position: Int) = fragments[position]
-                override fun getCount() = 5
+                override fun getCount() = FLIGHTS_COUNT
             }
         }
 

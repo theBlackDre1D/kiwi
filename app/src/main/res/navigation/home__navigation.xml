@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.g3.kiwi.screens.home.HomeFragment"
+        android:name="com.g3.kiwi.screens.home.fragments.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/home__fragment" />
 

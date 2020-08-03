@@ -15,10 +15,7 @@ private const val FLIGHT__BUNDLE_KEY = "FLIGHT__BUNDLE_KEY"
 
 class FlightPagerFragment : BaseFragment<FlightPagerFragmentBinding, FlightPagerFragmentHandler>() {
 
-    private val flight: Flight? by lazy {
-        val flight = arguments?.getSerializable(FLIGHT__BUNDLE_KEY) as? Flight
-        flight
-    }
+    private val flight: Flight? by lazy { arguments?.getSerializable(FLIGHT__BUNDLE_KEY) as? Flight }
 
     companion object {
         fun newInstance(flight: Flight): FlightPagerFragment {

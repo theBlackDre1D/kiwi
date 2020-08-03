@@ -9,7 +9,6 @@ abstract class BaseCoordinator {
         this.startActivity(activity, intent, false)
     }
 
-    @Suppress("MemberVisibilityCanBePrivate", "SameParameterValue")
     protected fun startActivity(activity: Activity, intent: Intent, finishStarterActivity: Boolean = false) {
         activity.startActivity(intent)
         if (finishStarterActivity) {

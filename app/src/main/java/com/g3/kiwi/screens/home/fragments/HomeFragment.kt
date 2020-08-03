@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 private const val FLIGHTS_COUNT = 5
+private const val DATE_FORMAT = "dd/MM/yyyy"
 
 class HomeFragment : BaseFragment<HomeFragmentBinding, HomeFragmentHandler>() {
 
@@ -29,7 +30,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeFragmentHandler>() {
     private fun getFlights() {
         if (homeFragmentViewModel.flights.value == null) {
             val calendar = Calendar.getInstance()
-            val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
             val todayDate = dateFormatter.format(Date(calendar.timeInMillis))
 
             homeFragmentViewModel.getFlights(todayDate, todayDate)

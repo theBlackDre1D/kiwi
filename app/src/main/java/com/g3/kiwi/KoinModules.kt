@@ -1,7 +1,9 @@
 package com.g3.kiwi
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.room.Room
 import com.g3.kiwi.api.FlightRequests
+import com.g3.kiwi.database.FlightDatabase
 import com.g3.kiwi.repositories.FlightRepositoryImp
 import com.g3.kiwi.repositories.interfaces.FlightRepository
 import com.g3.kiwi.screens.home.fragments.HomeFragmentViewModel
@@ -19,7 +21,7 @@ val koinModules = module {
     viewModel { (handle: SavedStateHandle) -> HomeFragmentViewModel(handle, get()) }
 
     // Repositories
-    single<FlightRepository> { FlightRepositoryImp( get() ) }
+    single<FlightRepository> { FlightRepositoryImp( get(), get() ) }
 
     // Retrofit
     single {
@@ -39,4 +41,8 @@ val koinModules = module {
         val retrofit = get<Retrofit>()
         retrofit.create(FlightRequests::class.java)
     }
+
+    // Room
+    single { Room.databaseBuilder(get(), FlightDatabase::class.java, "flightsDatabase" ).build() }
+    single { get<FlightDatabase>().flightDao() }
 }

@@ -8,7 +8,7 @@ data class FlightResponse(
 ) : Serializable
 
 data class Flight(
-    @SerializedName("cityTo") val cityTo: String,
     @SerializedName("id") val id: String,
+    @SerializedName("cityTo") val cityTo: String,
     @SerializedName("price") val price: Int
 ) : Serializable

@@ -9,48 +9,68 @@ import com.g3.kiwi.R
 import com.g3.kiwi.base.BaseFragment
 import com.g3.kiwi.base.BaseFragmentHandler
 import com.g3.kiwi.base.Either
+import com.g3.kiwi.database.FlightEntity
 import com.g3.kiwi.databinding.HomeFragmentBinding
-import com.g3.kiwi.models.FlightResponse
+import com.g3.kiwi.models.Flight
+import com.g3.kiwi.utils.DateUtils
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
-import java.text.SimpleDateFormat
-import java.util.*
 
-private const val FLIGHTS_COUNT = 5
-private const val DATE_FORMAT = "dd/MM/yyyy"
+const val FLIGHTS_COUNT = 5
 
 class HomeFragment : BaseFragment<HomeFragmentBinding, HomeFragmentHandler>() {
 
     private val homeFragmentViewModel: HomeFragmentViewModel by stateViewModel()
     override fun setBinding(layoutInflater: LayoutInflater): HomeFragmentBinding = HomeFragmentBinding.inflate(layoutInflater)
     override fun onFragmentLoadingFinished(binding: HomeFragmentBinding, context: Context) {
-        setupFlightsObserver()
-        getFlights()
+        setupFlightsObservers()
     }
 
     private fun getFlights() {
-        if (homeFragmentViewModel.flights.value == null) {
-            val calendar = Calendar.getInstance()
-            val dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
-            val todayDate = dateFormatter.format(Date(calendar.timeInMillis))
+        val todayDate = DateUtils.getTodayDate()
+        val tomorrowDate = DateUtils.getDateDaysFromNow(1)
 
-            homeFragmentViewModel.getFlights(todayDate, todayDate)
-        }
+        homeFragmentViewModel.getFlights(todayDate, tomorrowDate)
     }
 
-    private fun setupFlightsObserver() {
-        homeFragmentViewModel.flights.observe(this, Observer { response ->
-            binding.loadingPB.isVisible = false
-            binding.indicatorsV.isVisible = true
-            when (response) {
+    private fun setupFlightsObservers() {
+        homeFragmentViewModel.getSavedFlightsLiveData().observe(this, Observer { savedFlights ->
+            handleSavedFlights(savedFlights)
+        })
+
+        homeFragmentViewModel.flights.observe(this, Observer { savedFlights ->
+            when (savedFlights) {
                 is Either.Error -> showSnackBar(binding.root, R.string.error__loading_flights)
-                is Either.Success -> setupViewPager(response.value)
+                is Either.Success -> handleFlightsFromServer(savedFlights.value.flights)
             }
         })
     }
 
-    private fun setupViewPager(response: FlightResponse) {
+    private fun handleFlightsFromServer(newFlights: List<Flight>) {
+        val flightsToShow = newFlights.subList(0, homeFragmentViewModel.flightsCountToSave)
+        homeFragmentViewModel.saveFlights(flightsToShow)
+    }
+
+    private fun handleSavedFlights(savedFlights: List<FlightEntity>) {
+        val todayDate = DateUtils.getTodayDate()
+        val todayFlights = savedFlights.filter { flight -> flight.showDate == todayDate }
+        val flights = mutableListOf<Flight>()
+        todayFlights.forEach { flightEntity ->
+            flights.add(Flight(flightEntity.id, flightEntity.cityTo, flightEntity.price))
+        }
+
+        homeFragmentViewModel.flightsCountToSave = FLIGHTS_COUNT - flights.size
+        if (flights.size < 5) {
+            getFlights()
+        }
+        else {
+            binding.loadingPB.isVisible = false
+            binding.indicatorsV.isVisible = true
+            setupViewPager(flights.subList(0, FLIGHTS_COUNT))
+        }
+    }
+
+    private fun setupViewPager(flights: List<Flight>) {
         val fragments = mutableListOf<FlightPagerFragment>()
-        val flights = response.flights.subList(0, FLIGHTS_COUNT)
         flights.forEach { flight ->
             fragments.add(FlightPagerFragment.newInstance(flight))
         }

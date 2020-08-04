@@ -2,7 +2,7 @@
     <string name="app_name">Kiwi</string>
 
     <!--  Errors  -->
-    <string name="error__loading_flights">Unable to load flights.</string>
+    <string name="error__loading_flights">Unable to load flights from server.</string>
 
     <!--  Flights  -->
     <string name="flights__destination">Destination</string>

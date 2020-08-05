@@ -2,8 +2,6 @@ package com.g3.kiwi.repositories
 
 import androidx.lifecycle.LiveData
 import com.g3.kiwi.api.FlightRequests
-import com.g3.kiwi.base.BaseRepository
-import com.g3.kiwi.base.Either
 import com.g3.kiwi.database.FlightDao
 import com.g3.kiwi.database.FlightEntity
 import com.g3.kiwi.models.FlightResponse
@@ -11,9 +9,9 @@ import com.g3.kiwi.repositories.interfaces.FlightRepository
 
 class FlightRepositoryImp(
     private val flightRequests: FlightRequests,
-    private val flightDao: FlightDao) : BaseRepository(), FlightRepository {
+    private val flightDao: FlightDao) : com.g3.base.repository.BaseRepository(), FlightRepository {
 
-    override suspend fun getFlightsFromServer(flyFrom: String, flyTo: String, dateFrom: String, dateTo: String): Either<FlightResponse> {
+    override suspend fun getFlightsFromServer(flyFrom: String, flyTo: String, dateFrom: String, dateTo: String): com.g3.base.either.Either<FlightResponse> {
         return runTask { flightRequests.getFlights(flyFrom, flyTo, dateFrom, dateTo) }
     }
 

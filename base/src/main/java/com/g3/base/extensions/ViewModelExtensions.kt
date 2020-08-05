@@ -1,4 +1,4 @@
-package com.g3.kiwi.extensions
+package com.g3.base.extensions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

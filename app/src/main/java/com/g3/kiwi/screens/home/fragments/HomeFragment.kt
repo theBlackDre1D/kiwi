@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
+import com.g3.base.screens.fragment.BaseFragment
+import com.g3.base.screens.fragment.BaseFragmentHandler
 import com.g3.kiwi.R
-import com.g3.kiwi.base.BaseFragment
-import com.g3.kiwi.base.BaseFragmentHandler
-import com.g3.kiwi.base.Either
 import com.g3.kiwi.database.FlightEntity
 import com.g3.kiwi.databinding.HomeFragmentBinding
 import com.g3.kiwi.models.Flight
@@ -43,8 +42,8 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeFragmentHandler>() {
 
         homeFragmentViewModel.flights.observe(this, Observer { savedFlights ->
             when (savedFlights) {
-                is Either.Error -> showSnackBar(binding.root, R.string.error__loading_flights)
-                is Either.Success -> homeFragmentViewModel.saveFlights(savedFlights.value.flights)
+                is com.g3.base.either.Either.Error -> showSnackBar(binding.root, R.string.error__loading_flights)
+                is com.g3.base.either.Either.Success -> homeFragmentViewModel.saveFlights(savedFlights.value.flights)
             }
         })
     }

@@ -82,4 +82,6 @@ dependencies {
     kapt "androidx.room:room-compiler:$libraries.room"
     implementation "androidx.room:room-runtime:$libraries.room"
     implementation "androidx.room:room-ktx:$libraries.room"
+
+    implementation project(path: ':base')
 }

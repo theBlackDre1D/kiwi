@@ -1,4 +1,4 @@
-package com.g3.kiwi.base
+package com.g3.base.either
 
 sealed class Either<out T> {
     data class Error(val message: String?) : Either<Nothing>()

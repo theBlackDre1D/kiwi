@@ -2,7 +2,7 @@ package com.g3.kiwi.routing
 
 import android.app.Activity
 import android.content.Intent
-import com.g3.kiwi.base.BaseCoordinator
+import com.g3.base.routing.BaseCoordinator
 import com.g3.kiwi.screens.home.activity.HomeActivity
 
 class KiwiCoordinator : BaseCoordinator() {

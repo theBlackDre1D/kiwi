@@ -1,4 +1,6 @@
-package com.g3.kiwi.base
+package com.g3.base.repository
+
+import com.g3.base.either.Either
 
 abstract class BaseRepository {
     protected suspend fun <T> runTask(task: suspend () -> T): Either<T> {

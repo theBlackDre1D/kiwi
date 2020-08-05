@@ -1,4 +1,4 @@
-package com.g3.kiwi.base
+package com.g3.base.routing
 
 import android.app.Activity
 import android.content.Intent

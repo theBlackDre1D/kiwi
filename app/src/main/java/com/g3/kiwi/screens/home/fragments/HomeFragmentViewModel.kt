@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.g3.kiwi.base.Either
+import com.g3.base.extensions.coroutineTask
+import com.g3.base.extensions.flowTask
 import com.g3.kiwi.database.FlightEntity
-import com.g3.kiwi.extensions.coroutineTask
-import com.g3.kiwi.extensions.flowTask
 import com.g3.kiwi.models.Flight
 import com.g3.kiwi.models.FlightResponse
 import com.g3.kiwi.repositories.interfaces.FlightRepository
@@ -25,7 +24,7 @@ class HomeFragmentViewModel(
         get() = savedStateHandle.get(FLIGHTS_COUNT_TO_SAVE__BUNDLE_KEY) ?: FLIGHTS_COUNT
         set(value) = savedStateHandle.set(FLIGHTS_COUNT_TO_SAVE__BUNDLE_KEY, value)
 
-    var flights: MutableLiveData<Either<FlightResponse>>
+    var flights: MutableLiveData<com.g3.base.either.Either<FlightResponse>>
         get() = savedStateHandle.getLiveData(FLIGHTS__BUNDLE_KEY)
         set(value) = savedStateHandle.set(FLIGHTS__BUNDLE_KEY, value)
 
@@ -67,7 +66,6 @@ class HomeFragmentViewModel(
 
     private fun filterSavedFlightsFromResponse(newFlights: List<Flight>, savedFlights: List<FlightEntity>): List<Flight> {
         val savedFlightsIds = savedFlights.map { savedFlight -> savedFlight.id }
-        val filteredFlights = newFlights.filter { flight -> savedFlightsIds.contains(flight.id) }
-        return filteredFlights
+        return newFlights.filter { flight -> savedFlightsIds.contains(flight.id) }
     }
 }

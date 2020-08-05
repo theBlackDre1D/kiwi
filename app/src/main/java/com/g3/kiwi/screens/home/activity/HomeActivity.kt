@@ -1,8 +1,8 @@
 package com.g3.kiwi.screens.home.activity
 
 import android.view.LayoutInflater
+import com.g3.base.screens.activity.BaseActivity
 import com.g3.kiwi.R
-import com.g3.kiwi.base.BaseActivity
 import com.g3.kiwi.databinding.MainActivityBinding
 import com.g3.kiwi.screens.home.fragments.HomeFragmentHandler
 

@@ -3,9 +3,9 @@ package com.g3.kiwi.screens.home.fragments
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import com.g3.base.screens.fragment.BaseFragment
+import com.g3.base.screens.fragment.BaseFragmentHandler
 import com.g3.kiwi.R
-import com.g3.kiwi.base.BaseFragment
-import com.g3.kiwi.base.BaseFragmentHandler
 import com.g3.kiwi.databinding.FlightPagerFragmentBinding
 import com.g3.kiwi.extensions.loadImageFromURL
 import com.g3.kiwi.models.Flight

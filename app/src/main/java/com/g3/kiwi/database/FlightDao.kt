@@ -12,6 +12,9 @@ interface FlightDao {
     @Query("SELECT * FROM flight")
     fun getAllSavedFlightsLiveData(): LiveData<List<FlightEntity>>
 
+    @Query("SELECT * FROM flight")
+    suspend fun getAllSavedFlights(): List<FlightEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveFlights(flights: List<FlightEntity>)
 }

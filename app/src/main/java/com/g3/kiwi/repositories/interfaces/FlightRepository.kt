@@ -8,5 +8,6 @@ import com.g3.kiwi.models.FlightResponse
 interface FlightRepository {
     suspend fun getFlightsFromServer(flyFrom: String, flyTo: String, dateFrom: String, dateTo: String): Either<FlightResponse>
     suspend fun saveFlights(flights: List<FlightEntity>): Either<Unit>
+    suspend fun getAllSavedFlights(): List<FlightEntity>
     fun getSavedFlightsLiveData(): LiveData<List<FlightEntity>>
 }

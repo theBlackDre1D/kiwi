@@ -43,13 +43,31 @@ class HomeFragmentViewModel(
 
     fun getSavedFlightsLiveData(): LiveData<List<FlightEntity>> = flightRepository.getSavedFlightsLiveData()
 
-    fun saveFlights(flights: List<Flight>) {
-        val flightEntities = mutableListOf<FlightEntity>()
-        val todayDate = DateUtils.getTodayDate()
-        flights.forEach { flight ->
-            flightEntities.add(FlightEntity(flight.id, todayDate, flight.cityTo, flight.price))
-        }
+    fun saveFlights(newFlights: List<Flight>) {
+        coroutineTask {
+            val flightEntities = mutableListOf<FlightEntity>()
 
-        coroutineTask { flightRepository.saveFlights(flightEntities) }
+            val savedFlights = flightRepository.getAllSavedFlights()
+            if (savedFlights.isNotEmpty()) {
+                val refreshedFlights = filterSavedFlightsFromResponse(newFlights, savedFlights)
+                mapToFlightsEntities(refreshedFlights, flightEntities)
+            } else {
+                val flightsToSave = newFlights.subList(0, flightsCountToSave)
+                mapToFlightsEntities(flightsToSave, flightEntities)
+            }
+            flightRepository.saveFlights(flightEntities)
+        }
+    }
+
+    private fun mapToFlightsEntities(newFlights: List<Flight>, flightEntities: MutableList<FlightEntity>) {
+        val todayDate = DateUtils.getTodayDate()
+        val flights = newFlights.map { flight -> FlightEntity(flight.id, todayDate, flight.cityTo, flight.price) }
+        flightEntities.addAll(flights)
+    }
+
+    private fun filterSavedFlightsFromResponse(newFlights: List<Flight>, savedFlights: List<FlightEntity>): List<Flight> {
+        val savedFlightsIds = savedFlights.map { savedFlight -> savedFlight.id }
+        val filteredFlights = newFlights.filter { flight -> savedFlightsIds.contains(flight.id) }
+        return filteredFlights
     }
 }

@@ -25,6 +25,10 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeFragmentHandler>() {
         setupFlightsObservers()
     }
 
+    override fun onFragmentResumed() {
+        getFlights()
+    }
+
     private fun getFlights() {
         val todayDate = DateUtils.getTodayDate()
         val tomorrowDate = DateUtils.getDateDaysFromNow(1)
@@ -40,29 +44,20 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeFragmentHandler>() {
         homeFragmentViewModel.flights.observe(this, Observer { savedFlights ->
             when (savedFlights) {
                 is Either.Error -> showSnackBar(binding.root, R.string.error__loading_flights)
-                is Either.Success -> handleFlightsFromServer(savedFlights.value.flights)
+                is Either.Success -> homeFragmentViewModel.saveFlights(savedFlights.value.flights)
             }
         })
-    }
-
-    private fun handleFlightsFromServer(newFlights: List<Flight>) {
-        val flightsToShow = newFlights.subList(0, homeFragmentViewModel.flightsCountToSave)
-        homeFragmentViewModel.saveFlights(flightsToShow)
     }
 
     private fun handleSavedFlights(savedFlights: List<FlightEntity>) {
         val todayDate = DateUtils.getTodayDate()
         val todayFlights = savedFlights.filter { flight -> flight.showDate == todayDate }
-        val flights = mutableListOf<Flight>()
-        todayFlights.forEach { flightEntity ->
-            flights.add(Flight(flightEntity.id, flightEntity.cityTo, flightEntity.price))
-        }
+        val flights = todayFlights.map { flightEntity -> Flight(flightEntity.id, flightEntity.cityTo, flightEntity.price) }
 
         homeFragmentViewModel.flightsCountToSave = FLIGHTS_COUNT - flights.size
-        if (flights.size < 5) {
+        if (flights.size < FLIGHTS_COUNT) {
             getFlights()
-        }
-        else {
+        } else {
             binding.loadingPB.isVisible = false
             binding.indicatorsV.isVisible = true
             setupViewPager(flights.subList(0, FLIGHTS_COUNT))

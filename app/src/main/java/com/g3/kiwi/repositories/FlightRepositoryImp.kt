@@ -19,5 +19,6 @@ class FlightRepositoryImp(
 
     override fun getSavedFlightsLiveData(): LiveData<List<FlightEntity>> = flightDao.getAllSavedFlightsLiveData()
     override suspend fun saveFlights(flights: List<FlightEntity>) = runTask { flightDao.saveFlights(flights) }
+    override suspend fun getAllSavedFlights(): List<FlightEntity> = flightDao.getAllSavedFlights()
 
 }

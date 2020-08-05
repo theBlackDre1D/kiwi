@@ -41,10 +41,10 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeFragmentHandler>() {
         })
 
         homeFragmentViewModel.flights.observe(this, Observer { savedFlights ->
-            when (savedFlights) {
-                is com.g3.base.either.Either.Error -> showSnackBar(binding.root, R.string.error__loading_flights)
-                is com.g3.base.either.Either.Success -> homeFragmentViewModel.saveFlights(savedFlights.value.flights)
-            }
+            savedFlights.handleResult(
+                onSuccess = { success -> homeFragmentViewModel.saveFlights(success.value.flights) },
+                onError = { showSnackBar(binding.root, R.string.error__loading_flights) }
+            )
         })
     }
 

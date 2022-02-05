@@ -1,11 +1,12 @@
 package com.g3.kiwi
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.room.Room
-import com.g3.kiwi.api.FlightRequests
+import com.g3.kiwi.api.SuggestionRequests
 import com.g3.kiwi.database.FlightDatabase
 import com.g3.kiwi.repositories.FlightRepositoryImp
+import com.g3.kiwi.repositories.SuggestionRepositoryImpl
 import com.g3.kiwi.repositories.interfaces.FlightRepository
+import com.g3.kiwi.repositories.interfaces.SuggestionRepository
 import com.g3.kiwi.screens.home.fragments.HomeFragmentViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -18,10 +19,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 val koinModules = module {
 
     // ViewModels
-    viewModel { (handle: SavedStateHandle) -> HomeFragmentViewModel(handle, get()) }
+//    viewModel { (handle: SavedStateHandle) -> HomeFragmentViewModel(handle, get()) }
+    viewModel { HomeFragmentViewModel(get() ) }
 
     // Repositories
     single<FlightRepository> { FlightRepositoryImp( get(), get() ) }
+    single<SuggestionRepository> { SuggestionRepositoryImpl( get() ) }
 
     // Retrofit
     single {
@@ -30,7 +33,7 @@ val koinModules = module {
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
         Retrofit.Builder()
-            .baseUrl("https://api.skypicker.com")
+            .baseUrl("https://www.boredapi.com/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(client)
@@ -39,7 +42,7 @@ val koinModules = module {
 
     single {
         val retrofit = get<Retrofit>()
-        retrofit.create(FlightRequests::class.java)
+        retrofit.create(SuggestionRequests::class.java)
     }
 
     // Room

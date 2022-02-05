@@ -3,6 +3,7 @@
 
     <!--  Errors  -->
     <string name="error__loading_flights">Unable to load flights from server.</string>
+    <string name="error__loading_suggestion">Unable to load suggestion from server.</string>
 
     <!--  Flights  -->
     <string name="flights__destination">Destination</string>

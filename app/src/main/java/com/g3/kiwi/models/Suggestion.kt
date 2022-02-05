@@ -8,6 +8,6 @@ data class Suggestion(
     val key: String?,
     val link: String?,
     val participants: Int?,
-    val price: Int?,
+    val price: Double?,
     val type: String?
 ) : Serializable

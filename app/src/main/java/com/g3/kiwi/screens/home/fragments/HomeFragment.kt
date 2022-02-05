@@ -30,7 +30,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeFragmentHandler>() {
                 }
                 is Either.Error -> {
                     binding.loadingPB.isVisible = false
-                    showSnackBar(binding.root, R.string.error__loading_suggestion)
+                    showSnackBar(binding.root, suggestion.message)
                 }
                 else -> {}
             }
